@@ -2,68 +2,98 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Press Any Key</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Team Display</title>
   <style>
+    @font-face {
+      font-family: 'Arial Black';
+      src: local('Arial Black'), local('Arial-Black');
+      font-weight: bold;
+    }
+
     * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
     }
+
     html, body {
       width: 100%;
       height: 100%;
-      font-family: Arial, sans-serif;
-      background-image: url('https://files.catbox.moe/ctb7xt.jpg');
-      background-size: cover;
-      background-position: center;
+      font-family: 'Arial Black', sans-serif;
       color: white;
     }
-    .centered {
+
+    .scene {
+      width: 100%;
+      height: 100vh;
       position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      text-align: center;
+      top: 0;
+      left: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: opacity 0.8s ease;
     }
-    .hidden {
-      display: none;
+
+    #intro {
+      background-color: black;
     }
-    .overlay {
+
+    #main {
+      background-image: url('https://files.catbox.moe/mhczem.png');
+      background-size: cover;
+      background-position: center;
+      opacity: 0;
+      pointer-events: none;
+      flex-direction: column;
+    }
+
+    #main.show {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .name-list {
       background-color: rgba(0, 0, 0, 0.6);
-      padding: 2rem;
+      padding: 2rem 3rem;
       border-radius: 20px;
+      text-align: center;
+      font-size: 1.7rem;
+      line-height: 2.5rem;
       box-shadow: 0 0 20px rgba(0,0,0,0.5);
-      max-width: 600px;
-      margin: auto;
     }
-    h1 {
-      font-size: 2.5rem;
-      margin-bottom: 1rem;
-    }
-    p {
-      font-size: 1.2rem;
+
+    .name-list span {
+      display: block;
+      margin: 0.6rem 0;
     }
   </style>
 </head>
 <body>
-  <div id="intro" class="centered">
+
+  <div id="intro" class="scene">
     <h1>Press any key to continue</h1>
   </div>
 
-  <div id="main" class="centered hidden">
-    <div class="overlay">
-      <h1>Your Title Here</h1>
-      <p>Add your people, descriptions, or layout like in the image.</p>
-      <!-- Replace or extend this with the design from your reference -->
+  <div id="main" class="scene">
+    <div class="name-list">
+      <span>Krypt (OWNER)</span>
+      <span>Kzuki (OWNER)</span>
+      <span>Sec (DEV)</span>
+      <span>Dismayings</span>
+      <span>Operating</span>
+      <span>unworthy</span>
+      <span>Krone</span>
     </div>
   </div>
 
   <script>
     document.addEventListener('keydown', () => {
-      document.getElementById('intro').classList.add('hidden');
-      document.getElementById('main').classList.remove('hidden');
+      document.getElementById('intro').style.opacity = '0';
+      document.getElementById('main').classList.add('show');
     }, { once: true });
   </script>
+
 </body>
 </html>
