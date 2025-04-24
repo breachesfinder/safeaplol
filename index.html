@@ -22,6 +22,7 @@
       height: 100%;
       font-family: 'Arial Black', sans-serif;
       color: white;
+      overflow: hidden;
     }
 
     .scene {
@@ -38,6 +39,11 @@
 
     #intro {
       background-color: black;
+      z-index: 2;
+    }
+
+    #intro.hidden {
+      display: none;
     }
 
     #main {
@@ -47,6 +53,7 @@
       opacity: 0;
       pointer-events: none;
       flex-direction: column;
+      z-index: 1;
     }
 
     #main.show {
@@ -89,10 +96,14 @@
   </div>
 
   <script>
-    document.addEventListener('keydown', () => {
-      document.getElementById('intro').style.opacity = '0';
+    function start() {
+      document.getElementById('intro').classList.add('hidden');
       document.getElementById('main').classList.add('show');
-    }, { once: true });
+    }
+
+    // Key press OR click to trigger
+    window.addEventListener('keydown', start, { once: true });
+    window.addEventListener('click', start, { once: true });
   </script>
 
 </body>
