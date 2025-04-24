@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Press Any Key</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    html, body {
+      width: 100%;
+      height: 100%;
+      font-family: Arial, sans-serif;
+      background-image: url('https://files.catbox.moe/ctb7xt.jpg');
+      background-size: cover;
+      background-position: center;
+      color: white;
+    }
+    .centered {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      text-align: center;
+    }
+    .hidden {
+      display: none;
+    }
+    .overlay {
+      background-color: rgba(0, 0, 0, 0.6);
+      padding: 2rem;
+      border-radius: 20px;
+      box-shadow: 0 0 20px rgba(0,0,0,0.5);
+      max-width: 600px;
+      margin: auto;
+    }
+    h1 {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+    }
+    p {
+      font-size: 1.2rem;
+    }
+  </style>
+</head>
+<body>
+  <div id="intro" class="centered">
+    <h1>Press any key to continue</h1>
+  </div>
+
+  <div id="main" class="centered hidden">
+    <div class="overlay">
+      <h1>Your Title Here</h1>
+      <p>Add your people, descriptions, or layout like in the image.</p>
+      <!-- Replace or extend this with the design from your reference -->
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener('keydown', () => {
+      document.getElementById('intro').classList.add('hidden');
+      document.getElementById('main').classList.remove('hidden');
+    }, { once: true });
+  </script>
+</body>
+</html>
