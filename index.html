@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Glow Team</title>
+  <title>Safe - Roster</title>
   <style>
     @font-face {
       font-family: 'Arial Black';
@@ -55,6 +55,7 @@
       pointer-events: none;
       flex-direction: column;
       z-index: 1;
+      position: relative;
     }
 
     #main.show {
@@ -77,20 +78,39 @@
       font-size: 1.7rem;
       color: white;
       animation: glow 2s ease-in-out infinite alternate;
-      box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+      box-shadow: 0 0 5px rgba(255, 255, 255, 0.2);
     }
 
     @keyframes glow {
       0% {
-        text-shadow: 0 0 5px #fff,
-                     0 0 10px #fff,
-                     0 0 15px #fff;
+        text-shadow: 0 0 3px #fff,
+                     0 0 6px #fff,
+                     0 0 9px #fff;
       }
       100% {
-        text-shadow: 0 0 10px #ffffff,
-                     0 0 20px #ffffff,
-                     0 0 30px #ffffff;
+        text-shadow: 0 0 6px #ffffff,
+                     0 0 10px #ffffff,
+                     0 0 14px #ffffff;
       }
+    }
+
+    .telegram-button {
+      position: absolute;
+      bottom: 20px;
+      left: 20px;
+      background-color: rgba(0, 0, 0, 0.6);
+      color: white;
+      padding: 10px 20px;
+      border: 2px solid white;
+      border-radius: 10px;
+      text-decoration: none;
+      font-size: 1rem;
+      transition: background-color 0.3s ease, transform 0.2s ease;
+    }
+
+    .telegram-button:hover {
+      background-color: rgba(255, 255, 255, 0.1);
+      transform: scale(1.05);
     }
   </style>
 </head>
@@ -110,6 +130,8 @@
       <div class="name-box">unworthy</div>
       <div class="name-box">Krone</div>
     </div>
+
+    <a class="telegram-button" href="https://t.me/SafeAPx" target="_blank">Telegram</a>
   </div>
 
   <script>
