@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Safe - Roster</title>
+  <title>SafeAPx Portal</title>
   <style>
     @font-face {
       font-family: 'Arial Black';
@@ -36,6 +36,8 @@
       align-items: center;
       justify-content: center;
       transition: opacity 0.8s ease;
+      font-size: 1.5rem;
+      white-space: pre;
     }
 
     #intro {
@@ -47,8 +49,25 @@
       display: none;
     }
 
+    #terminal {
+      background-color: black;
+      padding: 20px;
+      border-radius: 10px;
+      width: 80%;
+      height: 80%;
+      font-family: 'Courier New', monospace;
+      z-index: 1;
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    #terminal.show {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
     #main {
-      background-image: url('https://files.catbox.moe/xo1po1.png');
+      background-image: url('https://files.catbox.moe/jcvw5d.png');
       background-size: cover;
       background-position: center;
       opacity: 0;
@@ -116,10 +135,19 @@
 </head>
 <body>
 
+  <!-- Intro Scene -->
   <div id="intro" class="scene">
     <h1>Press any key to continue</h1>
   </div>
 
+  <!-- Terminal Scene -->
+  <div id="terminal" class="scene">
+    <div>
+      root@secc.lol:~$ <span id="terminal-output"></span>
+    </div>
+  </div>
+
+  <!-- Profile Scene -->
   <div id="main" class="scene">
     <div class="name-list">
       <div class="name-box">Krypt</div>
@@ -135,11 +163,48 @@
   </div>
 
   <script>
-    function start() {
-      document.getElementById('intro').classList.add('hidden');
-      document.getElementById('main').classList.add('show');
+    const terminalOutput = document.getElementById('terminal-output');
+    const terminalText = [
+      "root@secc.lol",
+      "Please state the user you would like to add --> safeapx",
+      "Please set the password for 'safeapx' --> ********",
+      "Shall we create a home directory for 'safeapx'? --> Yes",
+      "Directory Created, time for your socials!",
+      "",
+      "Logging in...",
+      "Login successful."
+    ];
+
+    let currentTextIndex = 0;
+    let terminalInterval;
+
+    // Function to type out each line of terminal
+    function typeTerminal() {
+      if (currentTextIndex < terminalText.length) {
+        terminalOutput.textContent = terminalText[currentTextIndex];
+        currentTextIndex++;
+      } else {
+        clearInterval(terminalInterval);
+        setTimeout(() => {
+          // Proceed to next scene
+          document.getElementById('terminal').classList.remove('show');
+          document.getElementById('main').classList.add('show');
+        }, 1000);
+      }
     }
 
+    function startTerminal() {
+      terminalInterval = setInterval(typeTerminal, 2000); // Type every 2 seconds
+    }
+
+    // Start the terminal scene after keypress or click
+    function start() {
+      document.getElementById('intro').classList.add('hidden');
+      document.getElementById('terminal').classList.add('show');
+      startTerminal();
+    }
+
+    // Event listeners for keypress or click
     window.addEventListener('keydown', start, { once: true });
     window.addEventListener('click', start, { once: true });
   </script>
