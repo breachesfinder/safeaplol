@@ -50,28 +50,26 @@
       text-align: center;
       z-index: 5;
       font-size: 22px;
-      flex-direction: column;
-      gap: 15px;
       user-select: none;
       display: flex;
+      flex-direction: column;
       align-items: center;
-      justify-content: center;
+      gap: 20px;
     }
 
     .top-nav a {
-      margin: 5px 0;
-      text-decoration: underline;
       color: white;
       cursor: pointer;
       font-weight: bold;
+      text-decoration: underline;
+      display: block;
+      font-size: 22px;
     }
 
-    /* Bigger Telegram & Doxbin links */
     .top-nav a.telegram,
     .top-nav a.doxbin {
-      font-size: 28px;
-      margin: 10px 0;
-      user-select: text;
+      font-size: 30px;
+      margin-top: 10px;
     }
 
     .modal {
@@ -86,7 +84,7 @@
       box-shadow: 0 0 15px white;
       z-index: 100;
       white-space: pre-line;
-      font-size: 24px;
+      font-size: 26px;
       max-width: 90vw;
       max-height: 70vh;
       overflow-y: auto;
@@ -95,10 +93,8 @@
       user-select: text;
     }
 
-    /* Center and space roster names vertically */
-    .modal > div {
+    .modal div {
       margin: 10px 0;
-      font-size: 26px;
     }
 
     canvas {
@@ -114,9 +110,9 @@
   <div class="center-screen glow" id="intro">Press Any Key to Continue</div>
   <div class="center-screen glow" id="terminal" style="display:none; font-size: 20px;"></div>
 
-  <div class="top-nav glow" id="navbar" style="flex-direction: column;">
+  <div class="top-nav glow" id="navbar">
     <a href="https://t.me/resortannc" target="_blank" rel="noopener noreferrer" class="telegram">Telegram</a>
-    <a onclick="toggleRoster()" style="font-size: 22px; cursor: pointer;">Roster</a>
+    <a onclick="toggleRoster()">Roster</a>
     <a href="https://doxbin.com/user/ResortArchives" target="_blank" rel="noopener noreferrer" class="doxbin">Doxbin</a>
   </div>
 
