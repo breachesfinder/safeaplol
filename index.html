@@ -1,178 +1,177 @@
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<!DOCTYPE html><html lang="en">
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Resort</title>
   <style>
     @font-face {
       font-family: 'Arial Black';
       src: local('Arial Black'), local('Arial-Black');
       font-weight: bold;
-    }
+    }* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
 
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+html, body {
+  width: 100%;
+  height: 100%;
+  font-family: 'Arial Black', sans-serif;
+  background: black;
+  color: white;
+  overflow: hidden;
+}
 
-    html, body {
-      width: 100%;
-      height: 100%;
-      font-family: 'Arial Black', sans-serif;
-      background: black;
-      font-family: Arial, sans-serif;
-      background-color: black;
-      color: white;
-      overflow: hidden;
-    }
+.scene {
+  width: 100%;
+  height: 100vh;
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.8s ease;
+  font-size: 1.5rem;
+  white-space: pre;
+}
 
-    .scene {
-      width: 100%;
-      height: 100vh;
-      position: absolute;
-      top: 0;
-      left: 0;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: opacity 0.8s ease;
-      font-size: 1.5rem;
-      white-space: pre;
-    }
+#intro {
+  z-index: 3;
+  background: black;
+}
 
-    #intro {
-      background-color: black;
-      z-index: 2;
-    }
+#intro.hidden {
+  display: none;
+}
 
-    #intro.hidden {
-      display: none;
-      align-items: center;
-      height: 100vh;
-      overflow: hidden;
-    }
+#terminal {
+  background-color: black;
+  color: white;
+  padding: 20px;
+  width: 80%;
+  height: 80%;
+  font-family: 'Courier New', monospace;
+  z-index: 2;
+  opacity: 0;
+  pointer-events: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 
-    #terminal {
-    #dns-status {
-      background-color: black;
-      color: white;
-      padding: 20px;
-      border-radius: 10px;
-      width: 80%;
-      height: 80%;
-      font-family: 'Courier New', monospace;
-      z-index: 1;
-      opacity: 0;
-      pointer-events: none;
-    }
+#terminal.show {
+  opacity: 1;
+  pointer-events: auto;
+}
 
-    #terminal.show {
-      opacity: 1;
-      pointer-events: auto;
-    }
+#main {
+  background: black;
+  flex-direction: column;
+  z-index: 1;
+  position: relative;
+  opacity: 0;
+  pointer-events: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+}
 
-    #main {
-      background-image: url('https://files.catbox.moe/jcvw5d.png');
-      background-size: cover;
-      background-position: center;
-      opacity: 0;
-      pointer-events: none;
-      flex-direction: column;
-      z-index: 1;
-      position: relative;
-    }
+#main.show {
+  opacity: 1;
+  pointer-events: auto;
+}
 
-    #main.show {
-      opacity: 1;
-      pointer-events: auto;
-    }
+.name-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1rem;
+}
 
-    .name-list {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 1rem;
-    }
+.name-box {
+  background-color: rgba(0, 0, 0, 0.4);
+  padding: 0.75rem 2rem;
+  border-radius: 12px;
+  border: 2px solid red;
+  font-size: 1.5rem;
+  text-align: center;
+  color: white;
+  animation: glow 2s ease-in-out infinite alternate;
+  box-shadow: 0 0 5px white;
+}
 
-    .name-box {
-      background-color: rgba(0, 0, 0, 0.4);
-      padding: 0.75rem 2rem;
-      border-radius: 12px;
-      border: 2px solid red;
-      font-size: 1.5rem;
-      text-align: center;
-      font-size: 1.7rem;
-      color: white;
-      animation: glow 2s ease-in-out infinite alternate;
-      box-shadow: 0 0 5px rgba(255, 255, 255, 0.2);
-    }
+.name-box:hover {
+  cursor: pointer;
+}
 
-    @keyframes glow {
-      0% {
-        text-shadow: 0 0 3px #fff,
-                     0 0 6px #fff,
-                     0 0 9px #fff;
-      }
-      100% {
-        text-shadow: 0 0 6px #ffffff,
-                     0 0 10px #ffffff,
-                     0 0 14px #ffffff;
-      }
-    }
+@keyframes glow {
+  0% {
+    text-shadow: 0 0 5px white, 0 0 10px white, 0 0 15px white;
+  }
+  100% {
+    text-shadow: 0 0 10px white, 0 0 15px white, 0 0 20px white;
+  }
+}
 
-    .telegram-button {
-      position: absolute;
-      bottom: 20px;
-      left: 20px;
-      background-color: rgba(0, 0, 0, 0.6);
-      color: white;
-      padding: 10px 20px;
-      border: 2px solid white;
-      border-radius: 10px;
-      text-decoration: none;
-      font-size: 1rem;
-      transition: background-color 0.3s ease, transform 0.2s ease;
-    }
+.telegram-button {
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
+  background-color: rgba(0, 0, 0, 0.6);
+  color: white;
+  padding: 10px 20px;
+  border: 2px solid white;
+  border-radius: 10px;
+  text-decoration: none;
+  font-size: 1rem;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
 
-    .telegram-button:hover {
-      background-color: rgba(255, 255, 255, 0.1);
-      transform: scale(1.05);
-    }
+.telegram-button:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+  transform: scale(1.05);
+}
+
+.snowflake {
+  position: fixed;
+  top: -10px;
+  color: white;
+  animation: fall linear infinite;
+  font-size: 18px;
+}
+
+@keyframes fall {
+  to {
+    transform: translateY(110vh);
+  }
+}
+
   </style>
 </head>
 <body>
-
-  <!-- Intro Scene -->
   <div id="intro" class="scene">
     <h1>Press any key to continue</h1>
-  </div>
-
-  <!-- Terminal Scene -->
-  <div id="terminal" class="scene">
+  </div>  <div id="terminal" class="scene">
     <div>
       root@resort.sh:~$ <span id="terminal-output"></span>
     </div>
-  </div>
-
-  <!-- Profile Scene -->
-  <div id="main" class="scene">
+  </div>  <div id="main" class="scene">
     <div class="name-list">
-      <div class="name-box">Recency</div>
-      <div class="name-box">Akane</div>
-      <div class="name-box">Sec</div>
-      <div class="name-box">Sha</div>
-      <div class="name-box">Lurkingg</div>
-      <div class="name-box">Khursk</div>
-      <div class="name-box">Terror</div>
-      <div class="name-box">Dead</div>
-      <div class="name-box">Shy</div>
-      <div class="name-box">Holy/Kiryu</div>
+      <div class="name-box" onclick="window.open('https://t.me/@awdsis', '_blank')">Recency</div>
+      <div class="name-box" onclick="window.open('https://t.me/onlinefelomy', '_blank')">Akane</div>
+      <div class="name-box" onclick="window.open('https://t.me/assaultings', '_blank')">Sec</div>
+      <div class="name-box" onclick="window.open('https://t.me/bossbabyonosint', '_blank')">Sha</div>
+      <div class="name-box" onclick="window.open('https://t.me/relaxness', '_blank')">Lurkingg</div>
+      <div class="name-box" onclick="window.open('https://t.me/scarycat13', '_blank')">Khursk</div>
+      <div class="name-box" onclick="window.open('https://t.me/scarycat4', '_blank')">Terror</div>
+      <div class="name-box" onclick="window.open('https://t.me/qdwdqwdqwdqwdqw', '_blank')">Dead</div>
+      <div class="name-box" onclick="window.open('https://t.me/scarycat12', '_blank')">Shy</div>
+      <div class="name-box" onclick="window.open('https://t.me/femboykink', '_blank')">Holy/Kiryu</div>
     </div>
-
     <a class="telegram-button" href="https://t.me/resortannc" target="_blank">Telegram</a>
-  </div>
-  <!-- DNS Check Output -->
-  <div id="dns-status">Checking DNS...</div>
-
-  <script>
+  </div>  <script>
     const terminalOutput = document.getElementById('terminal-output');
     const terminalText = [
       "root@secc.lol",
@@ -188,7 +187,6 @@
     let currentTextIndex = 0;
     let terminalInterval;
 
-    // Function to type out each line of terminal
     function typeTerminal() {
       if (currentTextIndex < terminalText.length) {
         terminalOutput.textContent = terminalText[currentTextIndex];
@@ -196,7 +194,6 @@
       } else {
         clearInterval(terminalInterval);
         setTimeout(() => {
-          // Proceed to next scene
           document.getElementById('terminal').classList.remove('show');
           document.getElementById('main').classList.add('show');
         }, 1000);
@@ -204,35 +201,32 @@
     }
 
     function startTerminal() {
-      terminalInterval = setInterval(typeTerminal, 2000); // Type every 2 seconds
+      terminalInterval = setInterval(typeTerminal, 2000);
     }
 
-    // Start the terminal scene after keypress or click
     function start() {
       document.getElementById('intro').classList.add('hidden');
       document.getElementById('terminal').classList.add('show');
       startTerminal();
     }
 
-    // Event listeners for keypress or click
     window.addEventListener('keydown', start, { once: true });
     window.addEventListener('click', start, { once: true });
-    // Function to check DNS resolution and display status
-    function checkDNS() {
-      const dnsStatusElement = document.getElementById('dns-status');
-      fetch(window.location.href) // Try to fetch the current URL (basic check)
-        .then(response => {
-          if (response.ok) {
-            dnsStatusElement.innerText = 'DNS is working. The site is accessible!';
-            dnsStatusElement.style.border = '2px solid green';
-          } else {
-            dnsStatusElement.innerText = 'Error: DNS or site issue!';
-            dnsStatusElement.style.border = '2px solid red';
-          }
-        })
-        .catch(error => {
-         dnsStatusElement.innerText = 'Error: DNS or site issue! ' + error.message;
-          dnsStatusElement.style.border = '2px solid red';
-        });
+    window.addEventListener('touchstart', start, { once: true });
+
+    function createSnowflakes() {
+      for (let i = 0; i < 50; i++) {
+        const snowflake = document.createElement('div');
+        snowflake.className = 'snowflake';
+        snowflake.innerHTML = '&#10052;';
+        snowflake.style.left = `${Math.random() * 100}vw`;
+        snowflake.style.animationDuration = `${Math.random() * 5 + 5}s`;
+        snowflake.style.opacity = Math.random();
+        snowflake.style.fontSize = `${Math.random() * 10 + 10}px`;
+        document.body.appendChild(snowflake);
+      }
     }
-          
+
+    createSnowflakes();
+  </script></body>
+</html>
