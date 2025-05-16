@@ -1,124 +1,238 @@
-<!DOCTYPE html><html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Resort</title>
-  <link href="https://fonts.cdnfonts.com/css/minecraftia" rel="stylesheet">
   <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    body, html {
-      width: 100%; height: 100%;
+    @font-face {
+      font-family: 'Arial Black';
+      src: local('Arial Black'), local('Arial-Black');
+      font-weight: bold;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html, body {
+      width: 100%;
+      height: 100%;
+      font-family: 'Arial Black', sans-serif;
+      background: black;
+      font-family: Arial, sans-serif;
       background-color: black;
-      font-family: 'Minecraftia', sans-serif;
-      font-size: 18px;
       color: white;
       overflow: hidden;
     }
-    .glow {
-      text-shadow: 0 0 5px white, 0 0 10px white;
-    }
-    .center-screen {
-      position: absolute;
-      top: 50%; left: 50%;
-      transform: translate(-50%, -50%);
-      text-align: center;
-      z-index: 20;
-      cursor: pointer;
-      user-select: none;
-    }
-    .top-nav {
-      display: flex;
-      justify-content: center;
-      gap: 40px;
-      position: absolute;
-      top: 20px;
+
+    .scene {
       width: 100%;
-      z-index: 5;
+      height: 100vh;
+      position: absolute;
+      top: 0;
+      left: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: opacity 0.8s ease;
+      font-size: 1.5rem;
+      white-space: pre;
     }
-    .top-nav a {
-      text-decoration: none;
-      color: white;
-      cursor: pointer;
-      user-select: none;
-      text-shadow: 0 0 5px white, 0 0 10px white;
-    }
-    canvas {
-      position: fixed;
-      top: 0; left: 0;
-      z-index: 0;
-    }
-    #contentWrapper { display: none; }
-    #rosterTab {
-      display: none;
-      position: fixed;
-      top: 0; left: 0;
-      width: 100vw; height: 100vh;
+
+    #intro {
       background-color: black;
-      z-index: 100;
+      z-index: 2;
+    }
+
+    #intro.hidden {
+      display: none;
+      align-items: center;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    #terminal {
+    #dns-status {
+      background-color: black;
+      color: white;
+      padding: 20px;
+      border-radius: 10px;
+      width: 80%;
+      height: 80%;
+      font-family: 'Courier New', monospace;
+      z-index: 1;
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    #terminal.show {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    #main {
+      background-image: url('https://files.catbox.moe/jcvw5d.png');
+      background-size: cover;
+      background-position: center;
+      opacity: 0;
+      pointer-events: none;
+      flex-direction: column;
+      z-index: 1;
+      position: relative;
+    }
+
+    #main.show {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .name-list {
       display: flex;
       flex-direction: column;
       align-items: center;
-      justify-content: center;
-      gap: 40px;
-      padding: 20px;
+      gap: 1rem;
     }
-    #rosterNames {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 40px;
-    }
-    #rosterNames a {
+
+    .name-box {
+      background-color: rgba(0, 0, 0, 0.4);
+      padding: 0.75rem 2rem;
+      border-radius: 12px;
+      border: 2px solid red;
+      font-size: 1.5rem;
+      text-align: center;
+      font-size: 1.7rem;
       color: white;
-      text-decoration: none;
-      font-weight: bold;
-      text-shadow: 0 0 5px white, 0 0 10px white;
-      cursor: pointer;
+      animation: glow 2s ease-in-out infinite alternate;
+      box-shadow: 0 0 5px rgba(255, 255, 255, 0.2);
     }
-    #closeRoster {
+
+    @keyframes glow {
+      0% {
+        text-shadow: 0 0 3px #fff,
+                     0 0 6px #fff,
+                     0 0 9px #fff;
+      }
+      100% {
+        text-shadow: 0 0 6px #ffffff,
+                     0 0 10px #ffffff,
+                     0 0 14px #ffffff;
+      }
+    }
+
+    .telegram-button {
       position: absolute;
-      top: 20px; right: 25px;
-      font-size: 24px;
+      bottom: 20px;
+      left: 20px;
+      background-color: rgba(0, 0, 0, 0.6);
       color: white;
-      font-weight: bold;
-      cursor: pointer;
-      text-shadow: 0 0 5px white;
+      padding: 10px 20px;
+      border: 2px solid white;
+      border-radius: 10px;
+      text-decoration: none;
+      font-size: 1rem;
+      transition: background-color 0.3s ease, transform 0.2s ease;
+    }
+
+    .telegram-button:hover {
+      background-color: rgba(255, 255, 255, 0.1);
+      transform: scale(1.05);
     }
   </style>
 </head>
-<body><!-- Intro --><div class="center-screen glow" id="intro">Press Any Key to Continue</div><!-- Hidden content until activated --><div id="contentWrapper">
-  <canvas id="snow"></canvas>
-  <div class="top-nav" id="navbar">
-    <a href="https://t.me/resortannc" target="_blank">Telegram</a>
-    <a id="rosterLink">Roster</a>
-    <a href="https://doxbin.com/user/ResortArchives" target="_blank">Doxbin</a>
-  </div>
-</div><!-- Roster overlay --><div id="rosterTab">
-  <div id="closeRoster" onclick="closeRoster()">✖</div>
-  <div id="rosterNames">
-    <a href="https://t.me/awdsis" target="_blank">Recency</a>
-    <a href="https://t.me/onlinefelomy" target="_blank">Akane</a>
-    <a href="https://t.me/assaultings" target="_blank">Sec</a>
-    <a href="https://t.me/bossbabyonosint" target="_blank">Sha</a>
-    <a href="https://t.me/relaxness" target="_blank">Lurkingg</a>
-    <a href="https://t.me/scarycat13" target="_blank">Khursk</a>
-    <a href="https://t.me/scarycat4" target="_blank">Terror</a>
-    <a href="https://t.me/qdwdqwdqwdqwdqw" target="_blank">Dead</a>
-    <a href="https://t.me/scarycat12" target="_blank">Shy</a>
-    <a href="https://t.me/femboykink" target="_blank">Holy/Kiryu</a>
-  </div>
-</div><script>
-  const intro = document.getElementById("intro");
-  const content = document.getElementById("contentWrapper");
-  const snowCanvas = document.getElementById("snow");
-  const ctx = snowCanvas.getContext("2d");
-  let snowInterval;
+<body>
 
-  function startSite() {
-    intro.style.display = "none";
-    content.style.display = "block";
-    initSnow();
-    document.removeEventListener("keydown", startSite);
-    document.removeEventListener("click", startSite);
-    document.removeEventListener("touchstart", startSite);
-  }
+  <!-- Intro Scene -->
+  <div id="intro" class="scene">
+    <h1>Press any key to continue</h1>
+  </div>
+
+  <!-- Terminal Scene -->
+  <div id="terminal" class="scene">
+    <div>
+      root@resort.sh:~$ <span id="terminal-output"></span>
+    </div>
+  </div>
+
+  <!-- Profile Scene -->
+  <div id="main" class="scene">
+    <div class="name-list">
+      <div class="name-box">Recency</div>
+      <div class="name-box">Akane</div>
+      <div class="name-box">Sec</div>
+      <div class="name-box">Sha</div>
+      <div class="name-box">Lurkingg</div>
+      <div class="name-box">Khursk</div>
+      <div class="name-box">Terror</div>
+      <div class="name-box">Dead</div>
+      <div class="name-box">Shy</div>
+      <div class="name-box">Holy/Kiryu</div>
+    </div>
+
+    <a class="telegram-button" href="https://t.me/resortannc" target="_blank">Telegram</a>
+  </div>
+  <!-- DNS Check Output -->
+  <div id="dns-status">Checking DNS...</div>
+
+  <script>
+    const terminalOutput = document.getElementById('terminal-output');
+    const terminalText = [
+      "root@secc.lol",
+      "Please state the user you would like to add --> resort",
+      "Please set the password for 'resort.sh' --> ********",
+      "Shall we create a home directory for 'resort'? --> Yes",
+      "Directory Created, time for your socials!",
+      "",
+      "Logging in...",
+      "Login successful."
+    ];
+
+    let currentTextIndex = 0;
+    let terminalInterval;
+
+    // Function to type out each line of terminal
+    function typeTerminal() {
+      if (currentTextIndex < terminalText.length) {
+        terminalOutput.textContent = terminalText[currentTextIndex];
+        currentTextIndex++;
+      } else {
+        clearInterval(terminalInterval);
+        setTimeout(() => {
+          // Proceed to next scene
+          document.getElementById('terminal').classList.remove('show');
+          document.getElementById('main').classList.add('show');
+        }, 1000);
+      }
+    }
+
+    function startTerminal() {
+      terminalInterval = setInterval(typeTerminal, 2000); // Type every 2 seconds
+    }
+
+    // Start the terminal scene after keypress or click
+    function start() {
+      document.getElementById('intro').classList.add('hidden');
+      document.getElementById('terminal').classList.add('show');
+      startTerminal();
+    }
+
+    // Event listeners for keypress or click
+    window.addEventListener('keydown', start, { once: true });
+    window.addEventListener('click', start, { once: true });
+    // Function to check DNS resolution and display status
+    function checkDNS() {
+      const dnsStatusElement = document.getElementById('dns-status');
+      fetch(window.location.href) // Try to fetch the current URL (basic check)
+        .then(response => {
+          if (response.ok) {
+            dnsStatusElement.innerText = 'DNS is working. The site is accessible!';
+            dnsStatusElement.style.border = '2px solid green';
+          } else {
+            dnsStatusElement.innerText = 'Error: DNS or site issue!';
+            dnsStatusElement.style.border = '2px solid red';
+          }
+        })
+        .catch(error => {
+         dnsStatusElement.innerText = 'Error: DNS or site issue! ' + error.message;
+          dnsStatusElement.style.border = '2px solid red';
+        });
+    }
+          
