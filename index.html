@@ -1,4 +1,5 @@
-<!DOCTYPE html><html lang="en">
+<!DOCTYPE html>
+<html lang="en">
 <head>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Resort</title>
@@ -8,141 +9,153 @@
       margin: 0;
       padding: 0;
       box-sizing: border-box;
-    }html, body {
-  width: 100%;
-  height: 100%;
-  font-family: 'Minecraftia', sans-serif;
-  background: black;
-  color: white;
-  overflow: hidden;
-}
+    }
 
-.scene {
-  width: 100%;
-  height: 100vh;
-  position: absolute;
-  top: 0;
-  left: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: opacity 0.8s ease;
-  font-size: 1.5rem;
-  white-space: pre;
-}
+    html, body {
+      width: 100%;
+      height: 100%;
+      font-family: 'Minecraftia', monospace;
+      background: black;
+      color: white;
+      overflow: hidden;
+    }
 
-#intro {
-  z-index: 3;
-  background: black;
-}
+    .scene {
+      width: 100%;
+      height: 100vh;
+      position: absolute;
+      top: 0;
+      left: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: opacity 0.8s ease;
+      font-size: 1.5rem;
+      white-space: pre;
+      flex-direction: column;
+    }
 
-#intro.hidden {
-  display: none;
-}
+    #intro {
+      z-index: 3;
+      background: black;
+    }
 
-#terminal {
-  background-color: black;
-  color: white;
-  padding: 20px;
-  width: 80%;
-  height: 80%;
-  font-family: 'Minecraftia', monospace;
-  z-index: 2;
-  opacity: 0;
-  pointer-events: none;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
+    #intro.hidden {
+      display: none;
+    }
 
-#terminal.show {
-  opacity: 1;
-  pointer-events: auto;
-}
+    #terminal {
+      background-color: black;
+      color: white;
+      padding: 20px;
+      width: 80%;
+      height: 80%;
+      font-family: 'Minecraftia', monospace;
+      z-index: 2;
+      opacity: 0;
+      pointer-events: none;
+      display: flex;
+      align-items: flex-start;
+      justify-content: flex-start;
+      flex-direction: column;
+      white-space: pre-wrap;
+      font-size: 1.25rem;
+    }
 
-#main {
-  background: black;
-  flex-direction: column;
-  z-index: 1;
-  position: relative;
-  opacity: 0;
-  pointer-events: none;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 20px;
-}
+    #terminal.show {
+      opacity: 1;
+      pointer-events: auto;
+    }
 
-#main.show {
-  opacity: 1;
-  pointer-events: auto;
-}
+    #main {
+      background: black;
+      flex-direction: column;
+      z-index: 1;
+      position: relative;
+      opacity: 0;
+      pointer-events: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 20px;
+    }
 
-.name-list {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 1rem;
-}
+    #main.show {
+      opacity: 1;
+      pointer-events: auto;
+    }
 
-.name-box {
-  padding: 0.75rem 2rem;
-  font-size: 1.5rem;
-  text-align: center;
-  color: white;
-  animation: glow 2s ease-in-out infinite alternate;
-  text-decoration: underline;
-  cursor: pointer;
-}
+    .top-links {
+      display: flex;
+      flex-direction: column;
+      gap: 0.8rem;
+      margin-bottom: 1rem;
+      font-size: 1.2rem;
+      text-align: left;
+      white-space: nowrap;
+    }
 
-@keyframes glow {
-  0% {
-    text-shadow: 0 0 5px white, 0 0 10px white, 0 0 15px white;
-  }
-  100% {
-    text-shadow: 0 0 10px white, 0 0 15px white, 0 0 20px white;
-  }
-}
+    .top-links a {
+      color: white;
+      text-decoration: underline;
+      cursor: pointer;
+    }
 
-.top-links {
-  text-align: center;
-  margin-bottom: 1rem;
-  font-size: 1.2rem;
-}
+    .name-list {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 1rem;
+    }
 
-.top-links a {
-  color: white;
-  text-decoration: underline;
-  margin: 0 10px;
-}
+    .name-box {
+      padding: 0.75rem 2rem;
+      font-size: 1.5rem;
+      text-align: center;
+      color: white;
+      animation: glow 2s ease-in-out infinite alternate;
+      text-decoration: underline;
+      cursor: pointer;
+      user-select: none;
+    }
 
-.snowflake {
-  position: fixed;
-  top: -10px;
-  color: white;
-  animation: fall linear infinite;
-  font-size: 18px;
-}
+    @keyframes glow {
+      0% {
+        text-shadow: 0 0 5px white, 0 0 10px white, 0 0 15px white;
+      }
+      100% {
+        text-shadow: 0 0 10px white, 0 0 15px white, 0 0 20px white;
+      }
+    }
 
-@keyframes fall {
-  to {
-    transform: translateY(110vh);
-  }
-}
+    .snowflake {
+      position: fixed;
+      top: -10px;
+      color: white;
+      animation: fall linear infinite;
+      font-size: 18px;
+    }
 
+    @keyframes fall {
+      to {
+        transform: translateY(110vh);
+      }
+    }
   </style>
 </head>
 <body>
   <div id="intro" class="scene">
     <h1>Press any key to continue</h1>
-  </div>  <div id="terminal" class="scene">
-    <div>
-      root@resort.sh:~$ resort added. Password set. Directory created. Logging in... Login successful.
-    </div>
-  </div>  <div id="main" class="scene">
+  </div>
+
+  <div id="terminal" class="scene">
+    root@resort.sh:~$ resort added. Password set. Directory created. Logging in... Login successful.
+  </div>
+
+  <div id="main" class="scene">
     <div class="top-links">
-      Telegram: <a href="https://t.me/resortannc" target="_blank">https://t.me/resortannc</a><br>
-      Doxbin: <a href="https://doxbin.com/user/ResortArchives" target="_blank">https://doxbin.com/user/ResortArchives</a>
+      <a href="https://t.me/resortannc" target="_blank" rel="noopener noreferrer">Telegram</a>
+      <a href="https://doxbin.com/user/ResortArchives" target="_blank" rel="noopener noreferrer">Doxbin</a>
     </div>
     <div class="name-list">
       <div class="name-box" onclick="window.open('https://t.me/@awdsis', '_blank')">Recency</div>
@@ -156,7 +169,9 @@
       <div class="name-box" onclick="window.open('https://t.me/scarycat12', '_blank')">Shy</div>
       <div class="name-box" onclick="window.open('https://t.me/femboykink', '_blank')">Holy/Kiryu</div>
     </div>
-  </div>  <script>
+  </div>
+
+  <script>
     function start() {
       document.getElementById('intro').classList.add('hidden');
       document.getElementById('terminal').classList.add('show');
@@ -174,7 +189,7 @@
       for (let i = 0; i < 50; i++) {
         const snowflake = document.createElement('div');
         snowflake.className = 'snowflake';
-        snowflake.innerHTML = '&#10052;';
+        snowflake.innerHTML = '&#10052;'; // snowflake symbol
         snowflake.style.left = `${Math.random() * 100}vw`;
         snowflake.style.animationDuration = `${Math.random() * 5 + 5}s`;
         snowflake.style.opacity = Math.random();
@@ -184,5 +199,6 @@
     }
 
     createSnowflakes();
-  </script></body>
+  </script>
+</body>
 </html>
